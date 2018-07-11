@@ -37,8 +37,8 @@ class UserController extends Controller
         $user->email = $email;
         $user->type = $type;
         //$success['token'] = $user->createToken('GymApp')->accessToken;
-        $sucess['id'] = null;
-        $succes['name'] = $name;
+        $success['id'] = null;
+        $success['name'] = $name;
 
         if($user->save()){
             $sucess['id'] = $user->id;
