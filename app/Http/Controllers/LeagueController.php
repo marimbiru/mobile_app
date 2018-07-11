@@ -6,8 +6,12 @@ use App\League;
 use Illuminate\Http\Request;
 use App\Http\Resources\leaguelist;
 
+use Illuminate\Support\Facades\Auth;
+use Validator;
+
 class LeagueController extends Controller
 {
+    public $successStatus = 200;
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +42,38 @@ class LeagueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'official' => 'required|exists:users,id',
+            'start' => 'date|after:today',
+            'end' => 'date|after:start'
+            
+
+        ]);
+
+        if ($validator->fails()){
+            return response()->json(['error'=> $validator->errors()], 401);
+        }
+
+        $name = $request->input('name');
+        $official = $request->input('official');
+        $start = $request->input('start');
+        $end = $request->input('end');
+
+        $league = new League;
+
+        $league->name = $name;
+        $league->official_id = $official;
+        $league->start = $start;
+        $league->end = $end;
+        //$success['token'] = $user->createToken('GymApp')->accessToken;
+        $sucess['id'] = null;
+        $succes['name'] = $name;
+
+        if($league->save()){
+            $success['id'] = $league->id;
+           return response()->json(['success' => $success],$this->successStatus);
+        }
     }
 
     /**
@@ -49,7 +84,7 @@ class LeagueController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
