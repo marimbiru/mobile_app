@@ -14,7 +14,10 @@ class CreateTeamsTable extends Migration
     public function up()
     {
         Schema::create('teams', function (Blueprint $table) {
-            $table->increments('team_id');
+
+            $table->engine = 'InnoDB';
+
+            $table->integer('team_id')->autoIncrement();
             $table->string('team_name');
             $table->string('uname');
             $table->string('phone');

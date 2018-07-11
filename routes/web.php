@@ -21,3 +21,7 @@ Route::resource('api/v1.0/players', 'PlayerController');
 Route::resource('api/v1.0/teams', 'TeamController');
 
 Route::resource('api/v1.0/teams.players', 'TeamPlayerController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
